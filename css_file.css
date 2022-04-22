@@ -1,0 +1,22 @@
+p1{
+    font-weight: bold;
+    font-size: 26px;
+    color: brown;
+}
+
+header{
+    font-size: 40px;
+    color: lightgreen;
+}
+
+p2{
+    font-style: italic;
+    color: aqua;
+    font-size: 20px;
+}
+
+p3{
+    font-style: italic;
+    color: red;
+    font-size: 32px;
+}
