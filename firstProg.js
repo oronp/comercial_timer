@@ -26,7 +26,7 @@ class Day{
      new Ad("meridian",
          "./templateA.html",
          ["Waterproof", "Shock resistant", "Cordless", "90 Minutes Trim Time Fully Charged"],
-         ["pics/Meridian_balls.jpg", "pics/Meridian_case.jpg"],
+         ["./pics/Meridian_balls.jpg", "./pics/Meridian_case.jpg"],
          [new Day("monday",1,6,12),
                    new Day("wednesday",3,13,20)],
          [new Date(2022,1,1)],
@@ -46,7 +46,7 @@ class Day{
                "McNuggets........................................ 30nis",
                "Potuto&chips..................................... 25nis",
                "Happy Meal....................................... 34nis"],
-        ["pics/Mac.jpg"],
+        ["./pics/Mac.jpg"],
         [new Day("tuesday",2,10,16),
                new Day("wednesday",3,10,16)],
         [new Date(2022,1,3)],
@@ -114,13 +114,13 @@ function adSelector(){
     var my_time = time();
     if((my_time[1] == 1 || my_time[1] == 3) && my_time[0]>=6 && my_time[0]<12 && my_time[4] == 2022)
         ads_array.push(ads_new[0]);
-    if((my_time[1] == 2 || my_time[1] == 3) && my_time[0]>=10 && my_time[0]<16 && (my_time[3] == 3 ||my_time[3] == 4) && my_time[4] == 2022)
+    if((my_time[1] == 2 || my_time[1] == 3) && my_time[0]>=10 && my_time[0]<16 && (my_time[3] == 2 ||my_time[3] == 3) && my_time[4] == 2022)
         ads_array.push(ads_new[1]);
     if(my_time[0] >= 8 && my_time[0] < 22 && (my_time[3] == 4 ||(my_time[3] == 5 && my_time[2] <= 15)) && my_time[4] == 2022)
         ads_array.push(ads_new[2]);
-    if(my_time[1] == 1 && my_time[0] >= 15 && my_time[0] < 19 && ((my_time[3] == 3 && my_time[2] >= 29) || (my_time[3] == 4 && my_time[2] <= 15)) && my_time[4] == 2022)
+    if(my_time[1] == 1 && my_time[0] >= 15 && my_time[0] < 19 && ((my_time[3] == 2 && my_time[2] >= 29) || (my_time[3] == 3 && my_time[2] <= 15)) && my_time[4] == 2022)
         ads_array.push(ads_new[3]);
-    if(my_time[1] >= 1 && my_time[1] <= 3 && my_time[0] >= 1 && my_time[0] < 23 && my_time[3] == 4 && my_time[4] == 2022)
+    if(my_time[1] >= 1 && my_time[1] <= 3 && my_time[0] >= 1 && my_time[0] < 23 && my_time[3] == 3 && my_time[4] == 2022)
         ads_array.push(ads_new[4]);
     localStorage.ads = JSON.stringify(ads_array);
 }
@@ -139,7 +139,7 @@ function printHead(current_ad){
     document.write('<header id="head">' + current_ad["name"] + "(based on " + current_ad["templateUrl"] + ")<br/>" + '</header>');
 }
 
-function printText(current_ad){
+function printText(current_ad){ // print the text and images
     for(let elmnt of ads_new){
         if(!elmnt["name"].localeCompare(current_ad["name"])){
             var template = current_ad["templateUrl"]
