@@ -22,15 +22,15 @@ class Day{
 }
 
 // The ads array argument
- var ads_new = [
+ const ads_new = [
      new Ad("meridian",
          "./templateA.html",
          ["Waterproof", "Shock resistant", "Cordless", "90 Minutes Trim Time Fully Charged"],
          ["./pics/Meridian_balls.jpg", "./pics/Meridian_case.jpg"],
          [new Day("monday",1,6,12),
                    new Day("wednesday",3,13,20)],
-         [new Date(2022,1,1)],
-         [new Date(2022,12,31)],
+         [2022,0,1],
+         [2022,11,31],
          7,
          [1,2]
      ),
@@ -49,8 +49,8 @@ class Day{
         ["./pics/Mac.jpg"],
         [new Day("tuesday",2,10,16),
                new Day("wednesday",3,10,16)],
-        [new Date(2022,1,3)],
-        [new Date(2022,4,31)],
+        [2022,2,3],
+        [2022,3,31],
         10,
         [1,3]
     ),
@@ -65,8 +65,8 @@ class Day{
              new Day("thursday",4,8,22),
              new Day("friday",5,8,22),
              new Day("saturday",6,8,22)],
-         [new Date(2022,5,1)],
-         [new Date(2022,6,15)],
+         [2022,4,1],
+         [2022,5,30], //need to change the 30 to 15
          3,
          [2,3]
      ),
@@ -75,14 +75,15 @@ class Day{
          ["Halita? niftsata?", "we are here for you!"],
          [],
          [new Day("monday",1,15,19)],
-         [new Date(2022,3,29)],
-         [new Date(2022,5,14)],
+         [2022,2,29],
+         [2022,3,15],
          6,
-         [2]
+         [1]
      ),
      new Ad("Durex",
          "./templateB.html",
-         ["Don't forget to wear your mask",
+         ["Hey fella!",
+                "Don't forget to wear your mask",
                 "Don't limit yourself with treats",
                 "freedom means responsibility",
                 "Toys change, playtime Doesn't",
@@ -92,37 +93,47 @@ class Day{
          [new Day("monday",1,1,23),
              new Day("tuesday",2,1,23),
              new Day("wednesday",3,1,23)],
-         [new Date(2022,4,1)],
-         [new Date(2022,4,31)],
+         [2022,4,1],
+         [2022,4,30],
          9,
          [3]
      )
  ];
 
 function time(){
-    var date_now = new Date();
-    var day_in_week = date_now.getDay();
-    var day_in_month = date_now.getDate();
-    var month = date_now.getMonth();
-    var year = date_now.getFullYear();
-    var hour = date_now.getHours();
+    let date_now = new Date();
+    let day_in_week = date_now.getDay();
+    let day_in_month = date_now.getDate();
+    let month = date_now.getMonth();
+    let year = date_now.getFullYear();
+    let hour = date_now.getHours();
     return [hour,day_in_week,day_in_month,month,year];
 }
 
 function adSelector(){
-    var ads_array = [];
-    var my_time = time();
-    if((my_time[1] == 1 || my_time[1] == 3) && my_time[0]>=6 && my_time[0]<12 && my_time[4] == 2022)
-        ads_array.push(ads_new[0]);
-    if((my_time[1] == 2 || my_time[1] == 3) && my_time[0]>=10 && my_time[0]<16 && (my_time[3] == 2 ||my_time[3] == 3) && my_time[4] == 2022)
-        ads_array.push(ads_new[1]);
-    if(my_time[0] >= 8 && my_time[0] < 22 && (my_time[3] == 4 ||(my_time[3] == 5 && my_time[2] <= 15)) && my_time[4] == 2022)
-        ads_array.push(ads_new[2]);
-    if(my_time[1] == 1 && my_time[0] >= 15 && my_time[0] < 19 && ((my_time[3] == 2 && my_time[2] >= 29) || (my_time[3] == 3 && my_time[2] <= 15)) && my_time[4] == 2022)
-        ads_array.push(ads_new[3]);
-    if(my_time[1] >= 1 && my_time[1] <= 3 && my_time[0] >= 1 && my_time[0] < 23 && my_time[3] == 3 && my_time[4] == 2022)
-        ads_array.push(ads_new[4]);
+    let ads_array = [];
+    let my_time = time(); // [hour,day_in_week,day_in_month,month,year]
+    for(let i = 0; i < ads_new.length; i++){
+        if(my_time[4] == ads_new[i].fromDate[0]){ // checking year
+            if(my_time[3] >= ads_new[i].fromDate[1] && my_time[3] <= ads_new[i].toDate[1]){ // checking month
+                if(my_time[2] >= ads_new[i].fromDate[2] && my_time[2] <= ads_new[i].toDate[2]){ // checking day in month
+                        if(checkMyDay(my_time,ads_new[i])) // checking the day&hour in the week
+                            ads_array.push(ads_new[i]);
+                }
+            }
+        }
+    }
     localStorage.ads = JSON.stringify(ads_array);
+}
+
+function checkMyDay(time, current_ad){
+    for(let i = 0; i < current_ad.days.length; i++){
+        if(time[1] == current_ad.days[i]["number"]){
+            if(time[0] >= current_ad.days[i]["fromHour"] && time[0] < current_ad.days[i]["toHour"])
+                return true;
+        }
+    }
+    return false;
 }
 
 function adsPublisher(){
