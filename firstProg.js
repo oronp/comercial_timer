@@ -56,7 +56,7 @@ class Day{
     ),
      new Ad("Trivago",
          "./templateC.html",
-         [],
+         ["dekel ohel batahat ve gam ahoto"], //delete it!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
          [],
          [new Day("sunday",0,8,22),
              new Day("monday",1,8,22),
@@ -113,7 +113,7 @@ function time(){
 function adSelector(){
     let ads_array = [];
     let my_time = time(); // [hour,day_in_week,day_in_month,month,year]
-    for(let i = 0; i < ads_new.length; i++){
+    for(let i = 0; i < ads_new.length; i++){ // CHANGE IT TO FOREACH
         if(my_time[4] == ads_new[i].fromDate[0]){ // checking year
             if(my_time[3] >= ads_new[i].fromDate[1] && my_time[3] <= ads_new[i].toDate[1]){ // checking month
                 if(my_time[2] >= ads_new[i].fromDate[2] && my_time[2] <= ads_new[i].toDate[2]){ // checking day in month
@@ -124,6 +124,7 @@ function adSelector(){
         }
     }
     localStorage.ads = JSON.stringify(ads_array);
+    return ads_array;
 }
 
 function checkMyDay(time, current_ad){
@@ -138,12 +139,13 @@ function checkMyDay(time, current_ad){
 
 function adsPublisher(){
     let ads_array = JSON.parse(localStorage.ads);
-    var single_ad = ads_array[0];
+    let single_ad = ads_array[0];
     ads_array.shift();
     localStorage.ads = JSON.stringify(ads_array);
     printHead(single_ad);
     printText(single_ad);
-    timeDelay = setTimeout(swift,single_ad["timeDuration"]*1000);
+    // timeDelay = setTimeout(swift,single_ad["timeDuration"]*1000);
+    setTimeout(swift,single_ad["timeDuration"]*1000);
 }
 
 function printHead(current_ad){
@@ -151,7 +153,7 @@ function printHead(current_ad){
 }
 
 function printText(current_ad){ // print the text and images
-    for(let elmnt of ads_new){
+    for(let elmnt of ads_new){ // CHANGE TO FOREACH
         if(!elmnt["name"].localeCompare(current_ad["name"])){
             var template = current_ad["templateUrl"]
             for(let text of elmnt["texts"]){
@@ -174,9 +176,10 @@ function printImg(source){
 }
 
 function templateSelector(){
-    adSelector();
-    let ads_array = JSON.parse(localStorage.ads);
-    document.location.href = ads_array[0]["templateUrl"];
+    let tmp = adSelector();
+    $("#templates").text(tmp[0].texts[0]).css("background-color","yellow");
+    // let ads_array = JSON.parse(localStorage.ads);
+    // document.location.href = ads_array[0]["templateUrl"];
 }
 
 function swift(){
