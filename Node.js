@@ -24,7 +24,6 @@ app.get('/', (req, res) => {
 app.get('/screen=1', (req, res) => {
     if(ads_by_screen(1))
         res.sendFile(__dirname + '/main.html');
-        // res.sendFile(__dirname + ads_array[0]["templateUrl"]);
     else
         res.send('No ads for you today my brother');
 })
@@ -32,7 +31,6 @@ app.get('/screen=1', (req, res) => {
 app.get('/screen=2', (req, res) => {
     if(ads_by_screen(2))
         res.sendFile(__dirname + '/main.html');
-        // res.sendFile(__dirname + ads_array[0]["templateUrl"]);
     else
         res.send('No ads for you today my brother');
 })
@@ -40,7 +38,6 @@ app.get('/screen=2', (req, res) => {
 app.get('/screen=3', (req, res) => {
     if(ads_by_screen(3))
         res.sendFile(__dirname + '/main.html');
-        // res.sendFile(__dirname + ads_array[0]["templateUrl"]);
     else
         res.send('No ads for you today my brother');
 })
@@ -55,7 +52,7 @@ app.get('*', (req, res) => {
     res.send('PAGE NOT EXIST!')
 })
 
-app.post('noAds', (req, res) => {
+app.post('/noAds', (req, res) => {
     res.send('No ads for you today my brother')
 })
 

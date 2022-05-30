@@ -66,10 +66,8 @@ function adSelector(){
         localStorage.ads = JSON.stringify(ads_array);
         return ads_array;
     }
-    $.ajax({
-        type: 'post',
-        url: 'http://localhost:8080/noAds'
-    })
+    else
+        document.write("no ads for you right now ma man");
 }
 
 function checkMyDay(time, current_ad){
@@ -118,11 +116,12 @@ function printImg(source){
 
 async function templateSelector(){
     httpGet();
-    console.log(ads_new);
     adSelector();
     let ads_array = JSON.parse(localStorage.ads);
-    console.log(ads_array[0]["templateUrl"]);
-    document.location.href = ads_array[0]["templateUrl"];
+    if(ads_array.length == 0)
+        document.write("no ads for you right now ma man");
+    else
+        document.location.href = ads_array[0]["templateUrl"];
 }
 
 function swift(){
