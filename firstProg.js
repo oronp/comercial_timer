@@ -34,7 +34,7 @@ async function httpGet(){
             ads = JSON.parse(data);
             ads_new = ads;
         }
-    })
+    });
 }
 
 function time(){
@@ -51,7 +51,7 @@ function adSelector(){
     let ads_array = [];
     let my_time = time(); // [hour,day_in_week,day_in_month,month,year]
     let length = ads_new.length;
-    // ads_array.push(ads_new[0],ads_new[1],ads_new[2]); // in case nothing match and we need to test
+    ads_array.push(ads_new[0],ads_new[1],ads_new[2]); // in case nothing match and we need to test
     for(let i = 0; i < length; i++){
         if(my_time[4] == ads_new[i].fromDate[0]){ // checking year
             if(my_time[3] >= ads_new[i].fromDate[1] && my_time[3] <= ads_new[i].toDate[1]){ // checking month
@@ -118,10 +118,7 @@ async function templateSelector(){
     httpGet();
     adSelector();
     let ads_array = JSON.parse(localStorage.ads);
-    if(ads_array.length == 0)
-        document.write("no ads for you right now ma man");
-    else
-        document.location.href = ads_array[0]["templateUrl"];
+    document.location.href = ads_array[0]["templateUrl"];
 }
 
 function swift(){
